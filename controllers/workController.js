@@ -10,14 +10,14 @@ class WorkController {
   }
 
   async createWork(request, reply) {
-    const { id } = request.params;
+    const { userId } = request.params;
     const { image, title } = request.body;
-    const user = await User.findOne({ where: { id } });
+    const user = await User.findOne({ where: { id: userId } });
     if (user.isAdmin === true) {
       const work = await Work.create({
         image,
         title,
-        userId: id,
+        userId,
       });
       return reply.send(work);
     } else {
