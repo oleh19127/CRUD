@@ -1,16 +1,18 @@
 {
-  "type": "module",
   "name": "crud",
-  "description": "This project was bootstrapped with Fastify-CLI.",
   "version": "1.0.0",
-  "main": "app.js",
+  "description": "This project was bootstrapped with Fastify-CLI.",
+  "main": "app.ts",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "tap \"test/**/*.test.js\"",
-    "start": "fastify start -l info app.js",
-    "dev": "fastify start -w -l info -P app.js"
+    "test": "npm run build:ts && tsc -p test/tsconfig.json && tap --ts \"test/**/*.test.ts\"",
+    "start": "npm run build:ts && fastify start -l info -p 8000 dist/app.js",
+    "build:ts": "tsc",
+    "watch:ts": "tsc -w",
+    "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
+    "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P -p 8080 dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -21,20 +23,17 @@
     "fastify": "^4.0.0",
     "fastify-cli": "^5.7.1",
     "fastify-plugin": "^4.0.0",
-    "pg": "^8.11.1",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.32.1"
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
-    "@istanbuljs/esm-loader-hook": "0.2.0",
+    "@types/node": "^18.0.0",
+    "@types/tap": "^15.0.5",
+    "concurrently": "^7.0.0",
+    "fastify-tsconfig": "^1.0.1",
     "prettier": "^3.0.0",
-    "tap": "^16.1.0"
-  },
-  "tap": {
-    "node-arg": [
-      "--no-warnings",
-      "--experimental-loader",
-      "@istanbuljs/esm-loader-hook"
-    ]
+    "tap": "^16.1.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
   }
 }
