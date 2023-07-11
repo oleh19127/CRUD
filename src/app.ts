@@ -4,6 +4,7 @@ import { FastifyPluginAsync } from "fastify";
 
 import "reflect-metadata";
 import { AppDataSource } from "./db/data-source";
+import { fastifyCors } from "@fastify/cors";
 
 export type AppOptions = {
   // Place your custom options for app below here.
@@ -21,6 +22,8 @@ const app: FastifyPluginAsync<AppOptions> = async (
   await AppDataSource.initialize();
 
   // Do not touch the following lines
+
+  void fastify.register(fastifyCors);
 
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
