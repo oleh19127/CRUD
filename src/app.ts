@@ -1,7 +1,6 @@
 import { join } from "path";
 import AutoLoad, { AutoloadPluginOptions } from "@fastify/autoload";
 import { FastifyPluginAsync } from "fastify";
-
 import "reflect-metadata";
 import { AppDataSource } from "./db/data-source";
 import { fastifyCors } from "@fastify/cors";
